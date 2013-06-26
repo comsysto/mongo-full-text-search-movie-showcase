@@ -1,0 +1,97 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+group = 'com.comsysto'
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+//load version from the root folder
+def props = new Properties();
+file("gradle.properties").withInputStream { props.load(it) }
+props.each({ project.ext[it.key] = it.value })
+
+subprojects {
+
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    repositories {
+        mavenCentral()
+        mavenRepo(url: 'http://maven.springsource.org/release')
+        mavenRepo(url: 'http://repo.springsource.org/milestone')
+        mavenRepo(url: 'http://maven.restlet.org')
+    }
+
+    configurations.all {
+        resolutionStrategy.failOnVersionConflict()
+        resolutionStrategy {
+            force   "org.springframework:spring-aop:$springVersion",
+                    "org.springframework:spring-asm:$springVersion",
+                    "org.springframework:spring-beans:$springVersion",
+                    "org.springframework:spring-context:$springVersion",
+                    "org.springframework:spring-context-support:$springVersion",
+                    "org.springframework:spring-core:$springVersion",
+                    "org.springframework:spring-expression:$springVersion",
+                    "org.springframework:spring-jdbc:$springVersion",
+                    "org.springframework:spring-parent:$springVersion",
+                    "org.springframework:spring-tx:$springVersion",
+                    "org.springframework:spring-web:$springVersion",
+                    "org.springframework:spring-webmvc:$springVersion",
+                    "org.apache.wicket:wicket-core:$wicketVersion",
+                    "org.mongodb:mongo-java-driver:$mongodbDriverVersion",
+                    "org.mongodb:bson:$mongodbDriverVersion",
+                    "log4j:log4j:$log4JVersion",
+                    "junit:junit:$junitVersion",
+                    "com.foursquare:fongo:$fongoVersion",
+                    "org.hamcrest:hamcrest-core:1.3",
+                    "org.slf4j:slf4j-api:1.7.5",
+                    "org.objenesis:objenesis:1.2"
+        }
+        all*.exclude group: "org.mortbay.jetty"
+    }
+
+    ext.mongoDeps = [
+            "org.mongodb:mongo-java-driver:$mongodbDriverVersion",
+            "org.mongodb:bson:$mongodbDriverVersion",
+    ]
+
+    ext.springDeps = [
+            "org.springframework:spring-core:$springVersion",
+            "org.springframework:spring-tx:$springVersion",
+            "org.springframework:spring-jdbc:$springVersion",
+            "org.springframework:spring-beans:$springVersion",
+            "org.springframework:spring-context:$springVersion",
+            "org.springframework:spring-context-support:$springVersion",
+            "org.springframework:spring-web:$springVersion",
+            "org.springframework:spring-webmvc:$springVersion",
+            "org.springframework.data:spring-data-mongodb:$springDataMongoVersion",
+    ]
+
+    ext.wicketDeps = [
+            "org.apache.wicket:wicket-core:$wicketVersion",
+            "org.apache.wicket:wicket-spring:$wicketVersion",
+            "org.apache.wicket:wicket-auth-roles:$wicketVersion",
+            "org.apache.wicket:wicket-extensions:$wicketVersion",
+            "org.apache.wicket:wicket-native-websocket-jetty:$wicketWebSocketVersion",
+            "org.wicketstuff:wicketstuff-annotation:$wicketstuffVersion",
+    ]
+
+    ext.jettyDeps = [
+            "org.eclipse.jetty.aggregate:jetty-all-server:$jettyVersion",
+            "org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016@jar",
+            "org.eclipse.jetty:jetty-continuation:$jettyVersion",
+            "org.eclipse.jetty:jetty-http:$jettyVersion",
+    ]
+
+    ext.testDeps = [
+            "org.springframework:spring-test:$springVersion",
+            "junit:junit:$junitVersion",
+            "com.foursquare:fongo:$fongoVersion",
+            "com.lordofthejars:nosqlunit-mongodb:$nosqlunitVersion",
+    ]
+
+}

@@ -1,0 +1,17 @@
+classes/
+build/
+target/
+logs/
+.gradle/
+.idea/
+.history/
+.metadata/
+
+out/
+*.iml
+*.ipr
+*.iws
+
+.DS_Store
+bootstrap.zip
+.Rhistory

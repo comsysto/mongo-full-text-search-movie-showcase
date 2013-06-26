@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd ">
+<wicket:head/>
+<body>
+<wicket:panel>
+
+    <div class="text-center">
+        <form style="margin-top: 20px" wicket:id="movieListFilterForm">
+            <div class="input-append">
+                <input type="text" class="span5" style="height: 44px; font-size: 20px" placeholder="Search in movie titles..." wicket:id="searchString">
+                <button type="submit" class="btn" style="height: 44px; width: 120px">
+                    <i class="icon-search"></i>
+                    Search
+                </button>
+            </div>
+            <br><br>
+            <input type="checkbox" wicket:id="fullTextSearchCheckbox"/>
+            <label>Use Mongo Full Text Search</label>
+        </form>
+    </div>
+    <br /><br />
+    <table class="table">
+        <colgroup>
+            <col width="25%" />
+            <col width="55%" />
+            <col width="10%" />
+            <col width="5%" />
+            <col width="5%" />
+        </colgroup>
+        <div wicket:id="movieList"/>
+    </table>
+    <p>
+        AW = already watched<br>
+        LW = like to watch<br>
+    </p>
+    <br />
+    <div class="text-center">
+        <form wicket:id="movieImportForm">
+            <input type="number" width="100" wicket:id="movieImportCounter"/><br>
+            <button class="btn" wicket:id="movieImportButton">Fresh Import</button>
+        </form>
+    </div>
+    <br /><br />
+</wicket:panel>
+</body>
+</html>

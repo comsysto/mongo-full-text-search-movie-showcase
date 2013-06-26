@@ -1,0 +1,45 @@
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin:'application'
+
+// for application plugin
+mainClassName = "com.comsysto.movie.jetty.JettyStart"
+applicationName = "app"
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/main/resources'
+            srcDir 'src/main/webapp'
+            srcDir 'src/main/java'
+        }
+    }
+    test {
+        resources {
+            srcDir 'src/test/resources'
+            srcDir 'src/test/java'
+        }
+    }
+}
+
+
+dependencies {
+    compile mongoDeps
+    compile wicketDeps
+    compile springDeps
+    compile jettyDeps
+
+    compile project(':service')
+
+    testCompile testDeps
+}
+
+[jettyRun, jettyRunWar]*.with {
+    httpPort = 8080
+    contextPath="movie"
+}
+[jettyRun, jettyRunWar]*.doFirst {
+    System.setProperty("spring.profiles.active", "default")
+}
+
+task stage(dependsOn: ['clean', 'installApp'])
